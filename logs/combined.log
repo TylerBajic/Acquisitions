@@ -33,3 +33,41 @@
 {"level":"info","message":"::1 - - [01/Jul/2026:04:04:56 +0000] \"GET /health HTTP/1.1\" 403 83 \"-\" \"HTTPie\"","service":"acquisitions-api"}
 {"level":"warn","message":"Rate limit exceeded for role guest: n/a","service":"acquisitions-api"}
 {"level":"info","message":"::1 - - [01/Jul/2026:04:04:56 +0000] \"GET /health HTTP/1.1\" 403 83 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"Hello from Acquisitions API!","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:28:20 +0000] \"GET / HTTP/1.1\" 200 28 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:28:40 +0000] \"GET /health HTTP/1.1\" 200 76 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"Hello from Acquisitions API!","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:28:45 +0000] \"GET / HTTP/1.1\" 200 28 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"Hello from Acquisitions API!","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:38:14 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"Hello from Acquisitions API!","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:38:21 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"Hello from Acquisitions API!","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:39:01 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:39:06 +0000] \"GET /api HTTP/1.1\" 200 41 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:39:23 +0000] \"GET /health HTTP/1.1\" 200 74 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:46:09 +0000] \"GET / HTTP/1.1\" - - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"Hello from Acquisitions API!","service":"acquisitions-api"}
+{"level":"info","message":"Hello from Acquisitions API!","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:46:10 +0000] \"GET / HTTP/1.1\" 200 28 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:49:13 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 400 91 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"User created with email: contact@email.com","service":"acquisitions-api"}
+{"level":"error","message":"Signup error secretOrPrivateKey must have a value","service":"acquisitions-api","stack":"Error: secretOrPrivateKey must have a value\n    at module.exports [as sign] (/app/node_modules/jsonwebtoken/sign.js:111:20)\n    at signup (file:///app/src/controllers/auth.controller.js:25:32)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:49:42 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 500 441 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:50:09 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 400 91 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:50:22 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 400 91 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"error","message":"Failed to create user Error: User already exists","service":"acquisitions-api"}
+{"level":"error","message":"Signup error Error creating user","service":"acquisitions-api","stack":"Error: Error creating user\n    at createUser (file:///app/src/services/auth.service.js:41:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async signup (file:///app/src/controllers/auth.controller.js:23:22)"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:50:31 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 500 417 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"User created with email: contact@email123.com","service":"acquisitions-api"}
+{"level":"error","message":"Signup error secretOrPrivateKey must have a value","service":"acquisitions-api","stack":"Error: secretOrPrivateKey must have a value\n    at module.exports [as sign] (/app/node_modules/jsonwebtoken/sign.js:111:20)\n    at signup (file:///app/src/controllers/auth.controller.js:25:32)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:19:54:42 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 500 441 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"warn","message":"Bot detected: n/a","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:20:01:04 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 403 51 \"-\" \"curl/8.7.1\"","service":"acquisitions-api"}
+{"level":"info","message":"Hello from Acquisitions API!","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:20:04:25 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"User created with email: contact@email999.com","service":"acquisitions-api"}
+{"level":"info","message":"Creating user with email: contact@email999.com","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:20:04:56 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 201 118 \"-\" \"HTTPie\"","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:20:05:09 +0000] \"GET /health HTTP/1.1\" 200 76 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}
+{"level":"info","message":"::ffff:192.168.65.1 - - [01/Jul/2026:20:05:13 +0000] \"GET /api HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36\"","service":"acquisitions-api"}

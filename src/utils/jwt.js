@@ -1,3 +1,4 @@
+import logger from '#config/logger.js';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-please-change-this-in-production';
