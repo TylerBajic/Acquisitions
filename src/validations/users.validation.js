@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const userIdSchema = z.object({
-  id: z.preprocess((value) => {
+  id: z.preprocess(value => {
     if (typeof value === 'string' && /^\d+$/.test(value.trim())) {
       return Number(value);
     }
@@ -16,6 +16,6 @@ export const updateUserSchema = z
     password: z.string().min(6).max(128).optional(),
     role: z.enum(['user', 'admin']).optional(),
   })
-  .refine((data) => Object.keys(data).length > 0, {
+  .refine(data => Object.keys(data).length > 0, {
     message: 'At least one field must be provided',
   });

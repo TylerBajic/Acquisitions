@@ -8,10 +8,17 @@ import {
   updateUser as updateUserService,
   deleteUser as deleteUserService,
 } from '#services/users.services.js';
-import { userIdSchema, updateUserSchema } from '#validations/users.validation.js';
+import {
+  userIdSchema,
+  updateUserSchema,
+} from '#validations/users.validation.js';
 
-const getAuthenticatedUser = (req) => {
-  const token = cookies.get(req, 'token') || (req.headers.authorization?.startsWith('Bearer ') ? req.headers.authorization.split(' ')[1] : null);
+const getAuthenticatedUser = req => {
+  const token =
+    cookies.get(req, 'token') ||
+    (req.headers.authorization?.startsWith('Bearer ')
+      ? req.headers.authorization.split(' ')[1]
+      : null);
   if (!token) {
     throw new Error('Authentication required');
   }
@@ -82,11 +89,15 @@ export const updateUser = async (req, res, next) => {
     const updates = bodyValidation.data;
 
     if (user.id !== id && user.role !== 'admin') {
-      return res.status(403).json({ message: 'Forbidden: cannot update another user' });
+      return res
+        .status(403)
+        .json({ message: 'Forbidden: cannot update another user' });
     }
 
     if (updates.role && user.role !== 'admin') {
-      return res.status(403).json({ message: 'Forbidden: only admin can update user roles' });
+      return res
+        .status(403)
+        .json({ message: 'Forbidden: only admin can update user roles' });
     }
 
     logger.info(`Updating user with id: ${id} by user ${user.id}`);
@@ -97,7 +108,10 @@ export const updateUser = async (req, res, next) => {
     if (e.message === 'User not found') {
       return res.status(404).json({ message: 'User not found' });
     }
-    if (e.message === 'Authentication required' || e.message === 'Failed to authenticate token') {
+    if (
+      e.message === 'Authentication required' ||
+      e.message === 'Failed to authenticate token'
+    ) {
       return res.status(401).json({ message: 'Authentication required' });
     }
     next(e);
@@ -118,7 +132,9 @@ export const deleteUser = async (req, res, next) => {
     const { id } = validationResult.data;
 
     if (user.id !== id && user.role !== 'admin') {
-      return res.status(403).json({ message: 'Forbidden: cannot delete another user' });
+      return res
+        .status(403)
+        .json({ message: 'Forbidden: cannot delete another user' });
     }
 
     logger.info(`Deleting user with id: ${id} by user ${user.id}`);
@@ -129,7 +145,10 @@ export const deleteUser = async (req, res, next) => {
     if (e.message === 'User not found') {
       return res.status(404).json({ message: 'User not found' });
     }
-    if (e.message === 'Authentication required' || e.message === 'Failed to authenticate token') {
+    if (
+      e.message === 'Authentication required' ||
+      e.message === 'Failed to authenticate token'
+    ) {
       return res.status(401).json({ message: 'Authentication required' });
     }
     next(e);

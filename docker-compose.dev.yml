@@ -12,7 +12,7 @@ services:
     depends_on:
       - neon-local
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - .:/app
       - node_modules:/app/node_modules
@@ -23,7 +23,7 @@ services:
     env_file:
       - ./.env.development
     ports:
-      - "5432:5432"
+      - '5432:5432'
 
 volumes:
   node_modules:
