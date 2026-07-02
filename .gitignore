@@ -1,2 +1,25 @@
 node_modules
 .env.*.neon_local/
+
+# Dependencies
+node_modules/
+
+# Environment files (contain secrets)
+.env
+.env.development
+.env.production
+.env.local
+
+
+# Neon Local
+.neon_local/
+
+# Logs
+logs/
+*.log
+
+# macOS
+.DS_Store
+
+# VS Code (optional)
+.vscode/
