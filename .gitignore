@@ -21,5 +21,8 @@ logs/
 # macOS
 .DS_Store
 
+#Coverage reports
+coverage/
+
 # VS Code (optional)
 .vscode/

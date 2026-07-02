@@ -1,0 +1,65 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+jobs:
+  build-and-push:
+    name: Build and push Docker image
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set image timestamp
+        run: echo "IMAGE_TIMESTAMP=prod-$(date -u +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Generate image metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ secrets.DOCKER_HUB_REPOSITORY }}
+          tags: |
+            type=ref,event=branch
+            type=sha
+            type=raw,value=latest
+            type=raw,value=${{ env.IMAGE_TIMESTAMP }}
+          labels: |
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.source=${{ github.repositoryUrl }}
+            org.opencontainers.image.created=${{ github.event.head_commit.timestamp || github.event.repository.created_at }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_REPOSITORY }}:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_REPOSITORY }}:buildcache,mode=max
+
+      - name: Docker image summary
+        if: always()
+        run: |
+          echo "## Docker Build and Push" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Repository: ${{ secrets.DOCKER_HUB_REPOSITORY }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Published tags: ${{ steps.meta.outputs.tags }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Build platforms: linux/amd64, linux/arm64" >> "$GITHUB_STEP_SUMMARY"

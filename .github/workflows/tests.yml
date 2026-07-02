@@ -1,0 +1,63 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+  pull_request:
+    branches:
+      - main
+      - staging
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+      NODE_OPTIONS: --experimental-vm-modules
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run test suite
+        id: test
+        continue-on-error: true
+        run: npm test
+
+      - name: Upload coverage artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage
+          retention-days: 30
+
+      - name: Test results summary
+        if: always()
+        run: |
+          echo "## Test Summary" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.test.outcome }}" = "success" ]; then
+            echo "- ✅ Tests passed" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- ❌ Tests failed" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "- Coverage artifacts uploaded for 30 days." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Annotate test failures
+        if: steps.test.outcome == 'failure'
+        run: |
+          echo "::error title=Test suite failed::One or more tests failed. Review the log above and run 'npm test' locally with NODE_ENV=test.'"
+          exit 1
