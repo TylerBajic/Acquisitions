@@ -4,6 +4,16 @@ import { db } from '#config/database.js';
 import { eq } from 'drizzle-orm';
 import { users } from '#models/user.model.js';
 
+const maskDatabaseUrl = (databaseUrl) => {
+    if(!databaseUrl) return 'DATABASE_URL not set';
+    try {
+        const url = new URL(databaseUrl);
+        return `${url.protocol}//${url.hostname}:${url.port}${url.pathname}${url.search}`;
+    } catch (e) {
+        return 'invalid DATABASE_URL';
+    }
+};
+
 export const hashPassword = async (password) => {
     try{
         return await bcrypt.hash(password, 10);
@@ -24,7 +34,13 @@ export const comparePassword = async (password, hashedPassword) => {
 
 export const createUser = async ({ name, email, password, role = 'user' }) => {
     try{
+        logger.info(`Signup request email=${email}`, {
+            db: maskDatabaseUrl(process.env.DATABASE_URL),
+            nodeEnv: process.env.NODE_ENV,
+        });
+
         const existingUser = await db.select().from(users).where(eq(users.email, email)).limit(1);
+        logger.info(`Signup existingUser count=${existingUser.length} email=${email}`);
         if(existingUser.length > 0){
             throw new Error('User already exists');
         }
@@ -33,7 +49,10 @@ export const createUser = async ({ name, email, password, role = 'user' }) => {
 
         const [newUser] = await db.insert(users).values({ name, email, password: password_hash, role }).returning({ id: users.id, name: users.name, email: users.email, role: users.role, created_at: users.created_at});
 
-        logger.info(`User created with email: ${email}`);
+        logger.info(`User created with email: ${email}`, {
+            insertedId: newUser?.id,
+            insertedEmail: newUser?.email,
+        });
         return newUser;
 
     } catch(e){
@@ -50,6 +69,11 @@ export const createUser = async ({ name, email, password, role = 'user' }) => {
 
 export const authenticateUser = async ({ email, password }) => {
     try{
+        logger.info(`Signin request email=${email}`, {
+            db: maskDatabaseUrl(process.env.DATABASE_URL),
+            nodeEnv: process.env.NODE_ENV,
+        });
+
         const [user] = await db.select({
             id: users.id,
             name: users.name,
@@ -58,6 +82,11 @@ export const authenticateUser = async ({ email, password }) => {
             password: users.password,
             created_at: users.created_at
         }).from(users).where(eq(users.email, email)).limit(1);
+
+        logger.info(`Signin lookup result`, {
+            email,
+            found: Boolean(user),
+        });
 
         if(!user){
             throw new Error('User not found');
